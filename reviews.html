@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo</title>
+        <!-- CREDIT TO  CS 411 DEMO -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- <link rel="icon" href="{{ url_for('static', filename='img/cs.ico') }}"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+
+    </head>
+    <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">UIUClasses</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <a class="nav-item nav-link" href="#">Home</a>
+            <a class="nav-item nav-link" href="/courses.html">Courses</a>
+            <a class="nav-item nav-link" href="/professors.html">Professors</a>
+            <a class="nav-item nav-link" href="/departments.html">Departments</a>
+            <a class="nav-item nav-link active" href="/reviews.html">Your Reviews</a>
+            </div>
+        </div>
+        </nav>
+    
+    <main role="main" class="container extra-bottom">
+      <h1 class="mt-5">User Reviews</h1>
+    </main>
+    
+
+    <div class="container">    
+        <!-- NEW REVIEW -->
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#review-modal" data-source="New Review">Add New Review</button>
+        </div>
+        <!-- FIND ALL -->
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#view-modal" data-source="View All">View All Your Reviews</button>
+        </div>
+        <!-- FIND SPECIFIC -->
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#view-specific-modal" data-source="Filter Review">View Specifc Reviews</button>
+        </div>
+
+        <!-- ADD NEW REVIEW -->
+        <div class="modal fade" id="review-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Add a Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">UserId</span>
+                    <input type="text" class="form-control" id="newUserId" placeholder="EX: 182" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Course</span>
+                    <input type="text" class="form-control-course" id="newCourse" placeholder="EX: Data Structures" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Professor</span>
+                    <input type="text" class="form-control" id="newProfessor" placeholder="EX: Evans" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">GPA</span>
+                    <input type="text" class="form-control" id="newGPA" placeholder="EX: 3.00" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Enjoyability Rating</span>
+                    <input type="number" min="1" max="5" class="form-control" id="newEnjoy" placeholder="1" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Difficulty Rating</span>
+                    <input type="number" min="1" max="5" class="form-control" id="newDiff" placeholder="4" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Time Consumption Rating</span>
+                    <input type="number" min="1" max="5" class="form-control" id="newTime" placeholder="3" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="task-form-display">Feedback</span>
+                    <input type="text" class="form-control" id="newFeedback" placeholder="Best class ever!" aria-label="task-name" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submit-new-review" type="button" class="btn btn-primary">Done</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Update review -->
+        <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Update Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display-user">User Id</span>
+                        <input type="text" class="form-control-user" id="userID" placeholder="" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Feedback</span>
+                        <input type="text" class="form-control" id="newFeedback" placeholder="" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit-review-update" type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete review -->
+        <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Enter user ID to confirm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">User Id</span>
+                        <input type="text" class="form-control-user" id="userID" placeholder="" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm-delete" type="button" class="btn btn-primary">Delete</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View all reviews modal -->
+        <div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">View all User Reviews</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">User Id</span>
+                        <input type="text" class="viewUserId" id="newCourse" placeholder="120" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="see-reviews" type="button" class="btn btn-primary">Done</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- View specific reviews modal -->
+        <div class="modal fade" id="view-specific-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Find Specific Reviews</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">User Id</span>
+                        <input type="text" class="form-control" id="userID" placeholder="120" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Course</span>
+                        <input type="text" class="form-control" id="courseName" placeholder="EX: Data Structures" aria-label="task-name" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="see-specific-reviews" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--Todo Table-->
+    <div class="container table-responsive">          
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="task-id">Course</th>
+            <th class="task">Professor</th>
+            <th class="task">GPA</th>
+            <th class="update">Enjoyability Rating</th>
+            <th class="update">Difficulty Rating</th>
+            <th class="update">Time Consumption Rating</th>
+            <th class="update">Feedback</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{item.course}}</td>
+                <td>{{item.profId}}</td>
+                <td>{{item.gpa}}</td>
+                <td>{{item.enjoyRate}}</td>
+                <td>{{item.difficultRate}}</td>
+                <td>{{item.timeRate}}</td>
+                <td>{{item.feedback}}</td>
+                
+                <!-- edit -->
+                <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#update-modal" data-source="{{item.course}}" data-content="{{item.feedback}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
+                <!-- delete -->
+                <td><button class="btn btn-outline-secondary btn-sm remove" data-bs-toggle="modal" data-bs-target="#delete-modal" data-source="{{item.course}}" type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <h1 class="mt-5">Advanced Query</h1>
+
+    <label for="ratings">Select an option:</label>
+
+    <select name="ratingOptions" id="ratings">
+        <option value="EnjoyabilityRating">Most Enjoyable</option>
+        <option value="DifficultyRating">Easiest</option>
+        <option value="TimeConsumptionRating">Lightest Work Load</option>
+    </select>
+
+    <button id="find-courses-from-avg" type="button" class="btn btn-primary">Find Courses</button>
+
+    <div class="container table-responsive">          
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="task-id">Course</th>
+                <th class="task">Subject Code</th>
+                <th class="status">Number</th>
+                <th class="update">Average Rating</th>
+            </tr>
+            </thead>
+    
+            <tbody>
+            {% for item in courseItems %}
+                <tr>
+                    <td>{{item.course}}</td>
+                    <td>{{item.subjCode}}</td>
+                    <td>{{item.courseNum}}</td>
+                    <td>{{item.rating}}</td>
+                </tr>
+            {% endfor %}
+            
+            </tbody>
+        </table>
+    </div>
+  </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+
+</html>
+
+
+
+
+
+
+
+
+

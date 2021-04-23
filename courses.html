@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>MEALS</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{{ url_for('static', filename='img/cs.ico') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+    </head>
+
+    <body style="background-color:azure;">
+    
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">UIUClasses</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Home</a>
+                <a class="nav-item nav-link active" href="/courses.html">Courses</a>
+                <a class="nav-item nav-link" href="/professors.html">Professors</a>
+                <a class="nav-item nav-link" href="/departments.html">Departments</a>
+                <a class="nav-item nav-link" href="/reviews.html">Your Reviews</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">  
+            <header style="color:darkblue;">
+                <h2>Create, Update, Delete Courses</h2>
+            </header>
+        </div>
+
+        <hr>
+        <br> 
+
+         <!-- Create/Update/Delete Courses -->
+         <div class="container">    
+            <form action = "/cud" method="post">
+                <label for="pick-one-cud">Pick One</label><br>
+                <input type="radio" id="add" name="cud-type" value="add">
+                <label for="add">Add Course</label><br>
+                <input type="radio" id="update" name="cud-type" value="update">
+                <label for="update">Update Course</label><br>
+                <input type="radio" id="delete" name="cud-type" value="delete">
+                <label for="delete">Delete Course</label><br> 
+                <br> 
+                <input type="text" name="subject-code"></input>
+                <label for="subject-code">Subject Code</label><br>
+                <input type="text" name="crn"></input>
+                <label for="crn">Course Number</label><br>
+                <input type="text" name="course-title"></input>
+                <label for="course-title">Course Title</label><br>
+                <br> 
+                <input type="submit" class="btn btn-outline-success btn-sm state" value="Submit"></input>
+            </form>
+        </div>
+
+        <br> 
+        <br> 
+        <br> 
+
+        <div class="container">  
+            <header>
+                <h1 style="color:darkblue;">Queries</h1>
+                <strong style="color:steelblue;">Scroll down for results</strong>
+            </header>
+        </div>
+
+        <hr>
+        <br> 
+
+        <!-- Custom Queries -->
+        <div class="container">    
+            <label for="find-course-title">Find the course title</label><br>
+            <form action = "/customGetTitle" method="post">
+                <input type="text" name="subject-code"></input>
+                <label for="subject-code">Subject Code</label><br>
+                <input type="text" name="crn"></input>
+                <label for="crn">Course Number</label><br>
+                <br> 
+                <input type="submit" class="btn btn-outline-success btn-sm state" value="Query"></input>
+            </form>
+        </div>
+
+        <br> 
+        <br> 
+
+        <div class="container">   
+            <label for="find-sc-crn">Find the subject code and course number</label><br> 
+            <form action = "/customGetScAndCrn" method="post">
+                <input type="text" name="course-title"></input>
+                <label for="course-title">Course Title</label><br>
+                <br> 
+                <input type="submit" class="btn btn-outline-success btn-sm state" value="Query"></input>
+            </form>
+        </div>
+
+        <br> 
+        <br>
+        <br>
+        
+        <!--Query Table-->
+        <div class="container table-responsive">    
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="query-num">#</th>
+                    <th class="query">Query</th>
+                    <th class="search">Search</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.query}}</td>
+
+                        <td><form action="/queryCourses" method="post">
+                            <table><tr><td>
+                                <input type="radio" id="add" name="search" value={{item.id}}></input> 
+                                </td><td>
+                                <input type="submit" class="btn btn-outline-success btn-sm state" value="Search"></input>
+                                </td>
+                            </td></tr></table>
+                        </form></td>
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br> 
+        <br> 
+        <br> 
+
+
+        <div class="container">  
+            <header>
+                <h1 style="color:darkblue;">Query Results</h1>
+            </header>
+        </div>
+
+        <hr>
+        <br> 
+
+        <div class="container table-responsive">    
+            <table class="table">
+                <thead style="color:darkblue;">
+                    <tr>
+                        <th>Number of Courses</th>
+                        <th>Subject Code</th>
+                        <th>Course Number</th>
+                        <th>Course Title</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                    {% for row in data %}    
+                        <tr>
+                            <td>{{row[0]}}</td>
+                            <td>{{row[1]}}</td>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[4]}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">   
+            <form action="/backToHome" method="post">
+                <input type="submit" class="btn btn-outline-success btn-sm state" value="Reset"></input>
+            </form>
+        </div>
+
+        <br> 
+        <br> 
+        <br> 
+
+        <footer class="footer">
+        <div class="container" style="text-align: center;">
+                <p class="text-muted"><small>Meals - Courses @lahari2</small></p>
+        </div>
+        </footer>
+
+  </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+
+</html>
